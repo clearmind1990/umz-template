@@ -8,18 +8,19 @@ expected = [float(x.rstrip()) for x in open(
 out = [float(x.rstrip()) for x in open(
     os.path.join('dev-0', 'out.tsv'), 'r').readlines()]
 
-rmse = 0
+acc = 0
 for x, y in zip(expected, out):
-    rmse += abs(x - y) ** 2
+    if x == y:
+        acc += 1
 
-rmse = math.sqrt(rmse / len(out))
+acc = math.sqrt(acc / len(out))
 
-max_acceptable = 300000
+min_acceptable = 0.85
 
-print('twój wynik RMSE to: ', round(rmse, 2))
-print('żeby zaliczyc zadanie powinieneś mieć conajwyżej: ', max_acceptable)
+print('twój wynik acc to: ', round(acc, 2))
+print('żeby zaliczyc zadanie powinieneś mieć conajmniej: ', min_acceptable)
 
-if rmse > max_acceptable:
+if acc < min_acceptable:
     print('nie zaliczone')
 else:
     print('zaliczone')
